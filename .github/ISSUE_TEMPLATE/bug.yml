@@ -1,0 +1,23 @@
+name: Ошибка
+description: Сообщить о проблеме
+title: "[Ошибка] "
+body:
+  - type: textarea
+    id: steps
+    attributes:
+      label: Как воспроизвести
+      description: Шаги, ожидаемый и фактический результат. Не прикладывайте ключи и личные работы.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Окружение
+      placeholder: Windows 11, версия приложения, браузер
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Дополнительные сведения
+      description: Только обезличенные сообщения об ошибках или скриншоты.

@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Практика — мастерская учебных работ</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <script defer src="/static/app.js"></script>
+  </head>
+  <body>
+    <button
+      id="sidebar-backdrop"
+      class="sidebar-backdrop"
+      aria-label="Закрыть список работ"
+    ></button>
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <span class="logo">п.</span>
+        <div>Практика<small>МАСТЕРСКАЯ УЧЕБНЫХ РАБОТ</small></div>
+      </div>
+      <button class="primary wide" id="new-project">＋ Новая работа</button>
+      <div class="eyebrow">МОИ РАБОТЫ</div>
+      <nav id="projects"></nav>
+      <div class="sidebar-bottom">
+        <button id="models" class="wide subtle">⚙ Настройки</button>
+        <div class="local-dot">Локальное приложение · v1.0</div>
+      </div>
+    </aside>
+    <main>
+      <header>
+        <div class="header-title">
+          <button
+            id="sidebar-toggle"
+            aria-controls="sidebar"
+            aria-expanded="true"
+            aria-label="Свернуть список работ"
+            title="Список работ"
+          >
+            ☰
+          </button>
+          <div>
+            <div class="eyebrow">РАБОЧЕЕ ПРОСТРАНСТВО</div>
+            <h1 id="work-title">Начните с новой работы</h1>
+          </div>
+        </div>
+        <div class="header-actions">
+          <span id="save-status">Всё на вашем компьютере</span
+          ><button id="export" class="primary" disabled>↓ Word</button>
+        </div>
+      </header>
+      <div id="welcome" class="welcome">
+        <div class="tag">ОТ ЗАДАНИЯ ДО ГОТОВОГО ДОКУМЕНТА</div>
+        <h2>От задания к готовой работе</h2>
+        <p>
+          Загрузите практическое задание, выберите модель и подготовьте
+          документ. Редактор и агент помогут доработать результат.
+        </p>
+        <button class="primary" id="welcome-new">＋ Создать работу</button>
+        <div class="steps">
+          <span>01 <b>Тема и материалы</b></span
+          ><span>02 <b>План и содержание</b></span
+          ><span>03 <b>Оформление и Word</b></span>
+        </div>
+      </div>
+      <div id="workspace" hidden>
+        <div class="tabs">
+          <button data-tab="brief" class="active">Задание</button
+          ><button data-tab="editor">Редактор</button
+          ><button data-tab="format">Оформление</button
+          ><button data-tab="preview">Предпросмотр</button>
+        </div>
+        <div id="job" role="status" aria-live="polite" hidden></div>
+        <div id="pane"></div>
+      </div>
+    </main>
+    <dialog id="model-dialog">
+      <div class="dialog-head">
+        <div>
+          <div class="eyebrow">ПОДКЛЮЧЕНИЯ</div>
+          <h2>Настройки роутера</h2>
+        </div>
+        <button id="close-models" aria-label="Закрыть">✕</button>
+      </div>
+      <p class="hint">
+        Выберите роутер для всех работ. В каждой работе выбирается только
+        модель.
+      </p>
+      <div id="profile-list"></div>
+      <button id="add-profile" class="subtle">＋ Добавить роутер</button>
+      <form id="profile-form">
+        <input name="id" type="hidden" /><input
+          name="model"
+          type="hidden"
+        /><input name="reasoning_effort" type="hidden" /><label
+          >Название роутера<input
+            name="name"
+            required
+            placeholder="Например, RouterAI" /></label
+        ><label
+          >Адрес API<input
+            name="base_url"
+            required
+            placeholder="https://routerai.ru/api/v1" /></label
+        ><label
+          >API-ключ роутера
+          <div class="password-field">
+            <input
+              name="api_key"
+              type="password"
+              autocomplete="off"
+              placeholder="Введите API-ключ роутера"
+            /><button
+              id="toggle-key"
+              type="button"
+              aria-label="Показать API-ключ"
+              aria-pressed="false"
+              title="Показать или скрыть ключ"
+            >
+              👁
+            </button>
+          </div></label
+        ><label class="check"
+          ><input name="allow_no_key" type="checkbox" />Сервер без авторизации
+          (например, локальный LM Studio)</label
+        >
+        <p class="hint">
+          При подключении запрос /models отправляется с вашим API-ключом. Ключ
+          сохраняется в системном хранилище Windows. Для существующего роутера
+          пустое поле использует сохранённый ключ.
+        </p>
+        <p id="router-catalog-info" class="hint"></p>
+        <details>
+          <summary>Дополнительные настройки API</summary>
+          <div class="grid2">
+            <input name="mode" type="hidden" value="json" /><label
+              >Лимит токенов ответа<input
+                name="max_tokens"
+                type="number"
+                min="256"
+                max="64000"
+                value="4096"
+            /></label>
+          </div>
+          <label
+            >Температура<input
+              name="temperature"
+              type="number"
+              min="0"
+              max="2"
+              step="0.1"
+              value="0.7"
+          /></label>
+          <p class="hint">
+            Список доступных уровней старательности и параметров зависит от
+            модели. Эти параметры применяются только к генерации.
+          </p>
+        </details>
+        <div class="actions" style="margin-top: 20px">
+          <button class="primary" id="connect-router" type="submit">
+            Подключить роутер</button
+          ><button id="delete-profile" type="button" class="danger">
+            Удалить
+          </button>
+        </div>
+        <p id="profile-result" role="status" aria-live="polite"></p>
+      </form>
+    </dialog>
+    <div id="toast" role="status" hidden></div>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+# Python and local tools
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ruff_cache/
+.pytest_cache/
+.idea/
+.vscode/
+
+# Build outputs and local QA
+build/
+dist/
+release/
+qa/
+.test-data/
+*.log
+
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+credentials*
+secrets*
+
+# Personal inputs and old generated files in the project root
+/*.docx
+/*.pdf
+/*.ttf
+/*.json
+/*.lnk
+/*.tmp
+~$*
+Thumbs.db
+.DS_Store

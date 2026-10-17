@@ -1,0 +1,12 @@
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+include = ["*.py", "*.pyi", "*.spec"]
+extend-exclude = ["build", "dist", "qa", "release"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/test_application.py" = ["E402"]
+"*.spec" = ["F821"]
